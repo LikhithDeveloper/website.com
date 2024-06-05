@@ -18,6 +18,45 @@ class Register(models.Model):
     user_type = models.CharField(max_length=10)
 
     def __str__(self) -> str:
-        return f'{self.username}'
+        return f'{self.username} of course {self.course}'
     
+
+@receiver(post_save, sender=Register)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        if instance.user_type == 'student':
+            User.objects.create(
+            first_name = instance.first_name,
+            last_name  = instance.last_name,
+            username = instance.username,
+            password = instance.password,
+            email = instance.email,
+            is_active = True,
+            is_staff = False,
+            is_superuser = False
+        )
+        elif instance.user_type == 'teacher':
+            User.objects.create(
+            first_name = instance.first_name,
+            last_name  = instance.last_name,
+            username = instance.username,
+            password = instance.password,
+            email = instance.email,
+            is_active = True,
+            is_staff = True,
+            is_superuser = False
+        )
+        elif instance.user_type == 'admin':
+            User.objects.create(
+            first_name = instance.first_name,
+            last_name  = instance.last_name,
+            username = instance.username,
+            password = instance.password,
+            email = instance.email,
+            is_active = True,
+            is_staff = False,
+            is_superuser = True
+        )
+    else:
+        instance.profile.save()
 

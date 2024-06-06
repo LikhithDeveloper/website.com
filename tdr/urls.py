@@ -25,8 +25,10 @@ from students.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',home,name = 'home'),
-    path('register/',register,name = 'register')
+    path('home/',home,name = 'home'),
+    path('register/',register,name = 'register'),
+    path('login/',login_page,name='login_page'),
+    path('details/',details,name='details'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

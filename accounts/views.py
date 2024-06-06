@@ -26,26 +26,61 @@ def register(request):
         confirm_password = data.get('confirm_password')
         user_type = data.get('user_type')
 
-        x = Register.objects.filter(username = username)
-        if not x.exists():
-            Register.objects.create(
-            first_name = first_name,
-            last_name = last_name,
-            mobile_number = mobile_number,
-            email = email,
-            address = address,
-            class_name = class_name,
-            course = course,
-            username = username,
-            password = password,
-            user_type = user_type
-            )
-            messages.info(request, "User created succesfully")
+        if password != confirm_password:
+            messages.info(request, "Password missmatched")
             return redirect('/register/')
+
         else:
-            messages.info(request, "User is already exist")
-            return redirect('/register/')
+            x = Register.objects.filter(username = username)
+            if not x.exists():
+                Register.objects.create(
+                first_name = first_name,
+                last_name = last_name,
+                mobile_number = mobile_number,
+                email = email,
+                address = address,
+                class_name = class_name,
+                course = course,
+                username = username,
+                password = password,
+                user_type = user_type
+                )
+                messages.info(request, "User created succesfully")
+                return redirect('/register/')
+            else:
+                messages.info(request, "User is already exist")
+                return redirect('/register/')
 
 
 
     return render(request,'register.html')
+
+def login_page(request):
+    if request.method == "POST":
+        data = request.POST
+        username = data.get('username')
+        password = data.get('password')
+        user = User.objects.filter(username = username)
+        if not User.objects.filter(username=username):
+            messages.error(request,'Invalid Username')
+            return redirect('/login_page/')
+        user = authenticate(username = username , password = password)
+        if user:
+            x = Register.objects.get(username = username)
+            y = User.objects.get(username = username)
+            if x.user_type == 'student':
+                return redirect('/details/')
+            elif x.user_type == 'teacher':
+                return redirect('/details/')
+            elif x.user_type == 'admin' and y.username == 'admin':
+                return redirect('/admin/')
+    return render(request,'login.html')
+
+def details(request):
+    queryset = Register.objects.filter(user_type = 'student')
+    if request.GET.get('class_name'):
+        queryset = queryset.filter(class_name__exact = request.GET.get('class_name')) #by using __exact we can get the records which exactly equal to the search
+    if request.GET.get('id'):
+        queryset = queryset.filter(username__icontains = request.GET.get('username')) # by using __icontains we can get the records which contains the search
+    context = {'details':queryset}
+    return render(request,'details.html',context)

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap');
+        .navbar-nav .nav-link:hover {
+            color: rgb(30, 189, 30) !important;
+        }
+        .navbar {
+           box-shadow: 0px -2px 10px black; /* Optional: Add shadow for a raised effect */
+           width: 100%;
+        }
+        
+
+        .scroll{
+            font-style: italic;
+            background-color: white;
+            font-size: 15px;
+            margin-top: -20px;
+        }
+
+        .navbar-brand{
+            font-family: "Teko", sans-serif;
+            font-size: 20px;
+            padding-left: 0px;
+        }
+        .nav-link{
+            font-family: "Teko", sans-serif;
+            font-size: 20px;
+        }
+        .img {
+            width: 40px; /* Set the width to your desired value */
+            height: 40px; /* Set the height to maintain a specific aspect ratio */
+        }
+        
+
+        @media screen and (max-width:700px) and (min-width:250px) {
+          .navbar {
+           box-shadow: 0px -2px 10px black; /* Optional: Add shadow for a raised effect */
+           width: 81vh;
+
+          }
+          .container{
+            width: 80vh;
+        }
+        .search{
+            width: 80vh;
+            
+        }
+        .table{
+            width: 81vh;
+        }
+
+           .scroll{
+            font-style: italic;
+            background-color: white;
+            font-size: 15px;
+            margin-top: -20px;
+            width: 78vh;
+        }
+          
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar bg-light navbar-expand-lg text-white ">
+        <div class="container-fluid">
+            <a class="navbar-brand text-dark" href="#"><img class="img" src="https://ik.imagekit.io/zk7tfeeru/logo1.png-removebg-preview.png?updatedAt=1703492618039"><b>TDR COACHING CENTER</b></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active text-dark" aria-current="page" href="/home/">Home</a>
+                    <a class="nav-link active text-dark" href="/login_page/">Portal</a>
+                    <a class="nav-link active text-dark" href="#">Apply</a>  
+                    <a class="nav-link active text-dark" href="/test/">Tests</a>          
+                </div>
+                <a type="button" class="btn btn-dark" href="/register/">Register Here</a>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="scroll">
+        <marquee  direction="">Welcome To Dharama Raju's <b>TDR COACHING CENTER</b> Academy of Competative Foundation , B.S colony ,Sompeta, Srikakulam, AndhraPradesh</marquee>
+    </div>
+    
+   <div class="container mt-5">
+        <h2 style="text-align:  center;">Student Details</h2>
+        <hr>
+   </div>
+
+   <br>
+   <!-- <div class="search mt-7">
+        <div class="mx-auto col-6">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Search detail</label>
+                    <input name="search"  type="text" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>            
+        </div>
+   </div> -->
+
+   <div class="search mt-5">
+        <div class="mx-auto col-6">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Class details</label>
+                    <input name="class_name"  type="text" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>            
+        </div>
+   </div>
+
+   <div class="search mt-5">
+    <div class="mx-auto col-6">
+        <form>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Search by Id</label>
+                <input name="username"  type="text" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>            
+    </div>
+</div>
+   <br>
+   <br>
+
+   <div id="table">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Student_id</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Phone_numbers</th>
+            <th scope="col">Class_name</th>
+            <!-- <th scope="col">Fee_due</th> -->
+            <!-- <th scope="col">School_name</th>
+            <th scope="col">Actions</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for detail in details %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{detail.username}}</td>
+            <td>{{detail.first_name}}</td>
+            <td>{{detail.last_name}}</td>
+            <td>{{detail.mobile_number}}</td>
+            <td>{{detail.class_name}}</td>
+            <!-- <td>{{detail.fee_due}}</td>
+            <td>{{detail.school}}</td> -->
+            <!-- <td>
+                    <a href="/delete_details/{{detail.id}}" class="btn btn-danger m-2">Delete</a>
+                    <a href="/update_details/{{detail.id}}" class="btn btn-danger">Update</a>
+            </td> -->
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+   </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+

@@ -9,12 +9,11 @@ class Register(models.Model):
     last_name = models.CharField(max_length=50)
     mobile_number = models.CharField(max_length=12)
     email = models.EmailField(default='email')
-    address = models.TextField()
+    address = models.TextField(null=True)
     class_name = models.CharField(max_length=10,default='admin')
     course = models.CharField(max_length=10 , default='admin')
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=128)
-    confirm_password = models.CharField(max_length=128)
     user_type = models.CharField(max_length=10, choices=[
         ('student', 'Student'),
         ('teacher', 'Teacher'),

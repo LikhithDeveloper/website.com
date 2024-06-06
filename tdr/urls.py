@@ -20,10 +20,13 @@ from accounts.views import *
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from students.views import *
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',home,name = 'home')
+    path('',home,name = 'home'),
+    path('register/',register,name = 'register')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

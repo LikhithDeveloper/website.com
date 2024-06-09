@@ -87,7 +87,7 @@ def student_login(request):
             x = Register.objects.get(username = username)
             y = User.objects.get(username = username)
             if x.user_type == 'student':
-                return HttpResponse("Welcome student")
+                return redirect(f'/staff/{username}')
             else:
                 messages.error(request,'Only students can access to this portal')
                 return redirect('/student_login/')

@@ -60,3 +60,16 @@ def attendence(request):
     
     context = {'ids': queryset}
     return render(request, 'attendence.html', context)
+
+def staff(request,username):
+    queryset = Register.objects.get(username = username)
+    queryset1 = Attendence.objects.get(register4 = queryset)
+    x = queryset1.percentage
+    if(x < 75):
+        mess = "Your Attendence is very low maintain it properly"
+    elif x > 75 and x < 90:
+        mess = "You have adacquate attendence"
+    elif x >= 90:
+        mess = "You have good attendence"
+    context = {'data': queryset1,'mess':mess}
+    return render(request,'hi.html',context)

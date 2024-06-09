@@ -32,7 +32,8 @@ urlpatterns = [
     path('apply/',apply,name='apply'),
     path('dashboard/',dashboard,name='dashboard'),
     path('staff_login/',staff_login,name='staff_login'),
-    path('attendence/',attendence,name='attendence')
+    path('attendence/',attendence,name='attendence'),
+    path('staff/<username>/',staff,name='staff')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

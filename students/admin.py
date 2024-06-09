@@ -6,4 +6,7 @@ from .models import *
 admin.site.register(Student_id)
 admin.site.register(Marks)
 admin.site.register(Fee)
+admin.site.register(Attendence)
+
+
 

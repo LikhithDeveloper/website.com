@@ -8,7 +8,7 @@ from accounts.models import*
 
 
 class Student_id(models.Model):
-    register = models.ForeignKey(Register,on_delete=models.CASCADE)
+    register1 = models.OneToOneField(Register,on_delete=models.CASCADE)
     course = models.CharField(max_length=20)
     userid = models.CharField(max_length=20)
 
@@ -16,15 +16,21 @@ class Student_id(models.Model):
         return f'{self.register.first_name} of ID {self.id}'
 
 class Marks(models.Model):
-    register1 = models.ForeignKey(Register,on_delete=models.CASCADE)
+    register2 = models.ForeignKey(Register,on_delete=models.CASCADE)
     marks = models.IntegerField()
 
     def __str__(self) -> str:
         return f'{self.register1.username} got marks {self.marks}'
 
 class Fee(models.Model):
-    register2 = models.ForeignKey(Register,on_delete=models.CASCADE)
+    register3 = models.OneToOneField(Register,on_delete=models.CASCADE)
     fee = models.IntegerField()
     def __str__(self) -> str:
         return f'{self.register2.username}'
+    
+class Attendence(models.Model):
+    register4 = models.OneToOneField(Register,on_delete=models.CASCADE)
+    count = models.IntegerField(default=0)
+    percentage = models.IntegerField(default=0)
+
 

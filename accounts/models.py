@@ -19,6 +19,7 @@ class Register(models.Model):
         ('teacher', 'Teacher'),
         ('admin', 'Admin'),
     ])
+    #date_of_join = models.DateField(auto_now_add=True)
 
     def __str__(self) -> str:
         return f'{self.username} of course {self.course}'

@@ -55,7 +55,7 @@ def register(request):
 
     return render(request,'register.html')
 
-def login_page(request):
+def student_login(request):
     if request.method == "POST":
         data = request.POST
         username = data.get('username')
@@ -63,17 +63,36 @@ def login_page(request):
         user = User.objects.filter(username = username)
         if not User.objects.filter(username=username):
             messages.error(request,'Invalid Username')
-            return redirect('/login_page/')
+            return redirect('/student_login/')
         user = authenticate(username = username , password = password)
         if user:
             x = Register.objects.get(username = username)
             y = User.objects.get(username = username)
             if x.user_type == 'student':
+                return HttpResponse("Welcome student")
+            else:
+                messages.error(request,'Only students can access to this portal')
+                return redirect('/student_login/')
+    return render(request,'login.html')
+
+def staff_login(request):
+    if request.method == "POST":
+        data = request.POST
+        username = data.get('username')
+        password = data.get('password')
+        user = User.objects.filter(username = username)
+        if not User.objects.filter(username=username):
+            messages.error(request,'Invalid Username')
+            return redirect('/student_login/')
+        user = authenticate(username = username , password = password)
+        if user:
+            x = Register.objects.get(username = username)
+            y = User.objects.get(username = username)
+            if x.user_type == 'teacher':
                 return redirect('/details/')
-            elif x.user_type == 'teacher':
-                return redirect('/details/')
-            elif x.user_type == 'admin' and y.username == 'admin':
-                return redirect('/admin/')
+            else:
+                messages.error(request,'Only students can access to this portal')
+                return redirect('/student_login/')
     return render(request,'login.html')
 
 def details(request):
@@ -84,3 +103,9 @@ def details(request):
         queryset = queryset.filter(username__icontains = request.GET.get('username')) # by using __icontains we can get the records which contains the search
     context = {'details':queryset}
     return render(request,'details.html',context)
+
+def apply(request):
+    return render(request,'apply.html')
+
+def dashboard(request):
+    return render(request,'dashboard.html')

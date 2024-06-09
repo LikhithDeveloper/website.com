@@ -13,24 +13,27 @@ class Student_id(models.Model):
     userid = models.CharField(max_length=20)
 
     def __str__(self) -> str:
-        return f'{self.register.first_name} of ID {self.id}'
+        return f'{self.register1.first_name} of ID {self.userid}'
 
 class Marks(models.Model):
     register2 = models.ForeignKey(Register,on_delete=models.CASCADE)
-    marks = models.IntegerField()
+    marks = models.IntegerField(default=0)
 
     def __str__(self) -> str:
-        return f'{self.register1.username} got marks {self.marks}'
+        return f'{self.register2.username} got marks {self.marks}'
 
 class Fee(models.Model):
     register3 = models.OneToOneField(Register,on_delete=models.CASCADE)
     fee = models.IntegerField()
     def __str__(self) -> str:
-        return f'{self.register2.username}'
+        return f'{self.register3.username}'
     
 class Attendence(models.Model):
     register4 = models.OneToOneField(Register,on_delete=models.CASCADE)
     count = models.IntegerField(default=0)
     percentage = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f'{self.register4.username}'
 
 

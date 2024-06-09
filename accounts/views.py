@@ -21,6 +21,7 @@ def register(request):
         address = data.get('address')
         class_name = data.get('class_name')
         course = data.get('course')
+        fee = data.get('fee')
         username = data.get('username')
         password = data.get('password')
         confirm_password = data.get('confirm_password')
@@ -45,6 +46,23 @@ def register(request):
                 password = password,
                 user_type = user_type
                 )
+                queryset = Register.objects.get(username = username)
+                if queryset.user_type == 'student':
+                    Student_id.objects.create(
+                    register1 = queryset,
+                    course = course,
+                    userid = username
+                    )
+                    Marks.objects.create(
+                        register2 = queryset,
+                    )
+                    Fee.objects.create(
+                        register3 = queryset,
+                        fee = fee
+                    )
+                    Attendence.objects.create(
+                        register4 = queryset,
+                    )
                 messages.info(request, "User created succesfully")
                 return redirect('/register/')
             else:

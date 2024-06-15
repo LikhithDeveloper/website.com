@@ -29,9 +29,11 @@ class Fee(models.Model):
         return f'{self.register3.username}'
     
 class Attendence(models.Model):
-    register4 = models.OneToOneField(Register,on_delete=models.CASCADE)
+    register4 = models.OneToOneField(Register, on_delete=models.CASCADE)
     count = models.IntegerField(default=0)
-    percentage = models.IntegerField(default=0)
+    days = models.IntegerField(default=0)
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    tick = models.DateTimeField(null=True,blank=True)
 
     def __str__(self) -> str:
         return f'{self.register4.username}'

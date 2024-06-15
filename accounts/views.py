@@ -11,6 +11,9 @@ from students.models import *
 def home(request):
     return render(request,'home.html')
 
+
+#@login_required(login_url='/staff_login/')
+
 def register(request):
     if request.method == "POST":
         data = request.POST
@@ -73,6 +76,8 @@ def register(request):
 
     return render(request,'register.html')
 
+
+
 def student_login(request):
     if request.method == "POST":
         data = request.POST
@@ -87,7 +92,7 @@ def student_login(request):
             x = Register.objects.get(username = username)
             y = User.objects.get(username = username)
             if x.user_type == 'student':
-                return redirect(f'/staff/{username}')
+                return redirect(f'/student/{username}')
             else:
                 messages.error(request,'Only students can access to this portal')
                 return redirect('/student_login/')
@@ -113,6 +118,8 @@ def staff_login(request):
                 return redirect('/student_login/')
     return render(request,'login.html')
 
+
+#@login_required(login_url='/staff_login/')
 def details(request):
     queryset = Register.objects.filter(user_type = 'student')
     if request.GET.get('class_name'):

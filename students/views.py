@@ -9,6 +9,7 @@ from datetime import datetime
 from django.utils import timezone 
 
 # Create your views here.
+#@login_required(login_url='/staff_login/')
 def attendence(request):
     queryset = Attendence.objects.all()
     
@@ -23,18 +24,25 @@ def attendence(request):
                 attendance = data.get(f'attendance_{index}')
                 # print(studentId)
                 # print(attendance)
+                today = timezone.localtime(timezone.now())
                 try:
                     attendance_record = queryset.get(register4__username=studentId)
-                    attendance_record.count += int(attendance)
-                    attendance_record.save()
+                    if attendance_record.tick.date() == today.date():
+                        messages.info(request,'Attendence already taken')
+                        return redirect('/attendence/')
+                    if attendance == '1':
+                        attendance_record.count += int(attendance)
+                        attendance_record.tick = today
+                        attendance_record.save()
 
                     user = User.objects.get(username=studentId)
                     joined_date = user.date_joined
                     
-                    today = timezone.localtime(timezone.now())
+                    
                     delta = today - joined_date  # Calculate timedelta
                     #print(abs(delta.days) +1)  # Print the difference in days
-                    percentage = (attendance_record.count/(abs(delta.days) +1) ) * 100
+                    attendance_record.days = delta.days + 1
+                    percentage = (attendance_record.count/(attendance_record.days) ) * 100
                     attendance_record.percentage = percentage
                     attendance_record.save()
 
@@ -61,13 +69,14 @@ def attendence(request):
     context = {'ids': queryset}
     return render(request, 'attendence.html', context)
 
-def staff(request,username):
+#@login_required(login_url='/student_login/')
+def student(request,username):
     queryset = Register.objects.get(username = username)
     queryset1 = Attendence.objects.get(register4 = queryset)
     x = queryset1.percentage
     if(x < 75):
         mess = "Your Attendence is very low maintain it properly"
-    elif x > 75 and x < 90:
+    elif x >= 75 and x < 90:
         mess = "You have adacquate attendence"
     elif x >= 90:
         mess = "You have good attendence"

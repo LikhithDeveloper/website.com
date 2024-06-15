@@ -57,8 +57,7 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active text-dark" aria-current="page" href="/portfolio/">Home</a>
-                    <a class="nav-link active text-dark" href="#about0">About</a>
+                    <a class="nav-link active text-dark" aria-current="page" href="/home/">Home</a>
                     <a class="nav-link active text-dark" href="/dashboard/">Portal</a>
                     <a class="nav-link active text-dark" href="/apply/">Apply</a>
                 </div>
@@ -70,11 +69,19 @@
     <div class="scroll">
         <marquee>Welcome To Dharama Raju's <b>TDR COACHING CENTER</b> Academy of Competitive Foundation, B.S colony, Sompeta, Srikakulam, Andhra Pradesh</marquee>
     </div>
+
+    
+
     <div class="search mt-7">
         <div class="mx-auto col-6">
+            {% for message in messages %}
+    <div class="alert alert-primary" role="alert">
+        {{message}}
+      </div>
+    {% endfor %}
             <form>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Search detail</label>
+                    <label for="exampleInputPassword1" class="form-label">Search By class</label>
                     <input name="search" type="text" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>
@@ -89,7 +96,8 @@
                 <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">Name</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
                         <th scope="col">Student ID</th>
                         <th scope="col">Take Attendance</th>
                       </tr>
@@ -97,6 +105,7 @@
                     <tbody>
                         {% for i in ids %}
                       <tr>
+                        <td>{{ i.register4.first_name }}</td>
                         <td>{{ i.register4.last_name }}</td>
                         <td><input type="text" name="studentId_{{ forloop.counter }}" value="{{ i.register4.username }}" required></td>
                         <td>
